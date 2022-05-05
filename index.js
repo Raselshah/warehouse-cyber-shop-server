@@ -37,6 +37,12 @@ async function run() {
       const product = await productCollection.findOne(query);
       res.send(product);
     });
+
+    app.post("/home", async (req, res) => {
+      const newProduct = req.body;
+      const product = await productCollection.insertOne(newProduct);
+      res.send(product);
+    });
   } finally {
     //   free
   }
