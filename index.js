@@ -10,7 +10,8 @@ app.use(express.json());
 
 // use dynamic database
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.kisk2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri =
+  "mongodb+srv://userId3:nZg8UvSJ6zeg8COC@cluster0.kisk2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,11 +19,13 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
-  await client.connect();
-  const productCollection = client.db("cyberClinic").collection("product");
   try {
+    await client.connect();
+    const productCollection = client.db("cyberClinic").collection("product");
+
+    // http://localhost:5000/home
     app.get("/home", async (req, res) => {
-      const query = req.body;
+      const query = {};
       const cursor = productCollection.find(query);
       const product = await cursor.toArray();
       res.send(product);
