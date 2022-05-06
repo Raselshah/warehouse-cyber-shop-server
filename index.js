@@ -31,6 +31,14 @@ async function run() {
       res.send(product);
     });
 
+    app.get("/item", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const cursor = productCollection.find(query);
+      const product = await cursor.toArray();
+      res.send(product);
+    });
+
     app.get("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -38,7 +46,7 @@ async function run() {
       res.send(product);
     });
 
-    app.post("/home", async (req, res) => {
+    app.post("/add", async (req, res) => {
       const newProduct = req.body;
       const product = await productCollection.insertOne(newProduct);
       res.send(product);
@@ -61,5 +69,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("db one", port);
+  console.log("db connected", port);
 });
